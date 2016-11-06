@@ -3,6 +3,9 @@ from net import *
 import numpy as np
 
 RUN_ON_GPU = False
+class ImageTransformerMock():
+    def transform(self, image, modelPath):
+        return image
 class ImageTransformer:
     def __init__(self):
         self.model = FastStyleNet()
