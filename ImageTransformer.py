@@ -1,10 +1,12 @@
 from chainer import serializers, cuda, Variable
 from net import *
 import numpy as np
+from time import sleep
 
 RUN_ON_GPU = False
 class ImageTransformerMock():
     def transform(self, image, modelPath):
+        sleep(3)
         return image
 class ImageTransformer:
     def __init__(self):
