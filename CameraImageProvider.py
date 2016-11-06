@@ -4,11 +4,13 @@ from helpers import resizeImage
 
 class CameraImageProvider:
     cameraID = 0 # 0 for integrated cam, 1 for first external can ....
+    previewSize = (200,200)
     def __init__(self):
         self.cap = cv2.VideoCapture(CameraImageProvider.cameraID)
     def getImagePreview(self):
-        self.lastFrame = resizeImage(Image.fromarray(self.getImageRaw()), (200,200))
+        self.lastFrame = resizeImage(Image.fromarray(self.getImageRaw()), CameraImageProvider.previewSize)
         return self.lastFrame
     def getImageRaw(self):
-        ret, frame = self.cap.read()
+        _, frame = self.cap.read()
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         return frame
