@@ -1,25 +1,22 @@
 import tkinter as tk
 from PIL import Image, ImageTk
-from helpers import bindWithChildren
+from helpers import bindWithChildren, resizeImage
 
 class StyleFrame(tk.Frame):
     imageSize=(200,200)
     colorActive="#B3FF50"
     colorInactive="white"
     def __init__(self, parentFrame, style):
-        super().__init__(master = parentFrame, relief='flat', borderwidth=4)
+        super().__init__(master = parentFrame, background="white", padx="10px", pady="10px")
         self.parent=parentFrame
         self.createImageLabel(self, style.filepath)
         self.createTextLabel(self, style.name)
         self.setLabelsBackground(StyleFrame.colorInactive)
-        self.configure(background="white", padx="10px", pady="10px")
         self.pack(fill='y', side=tk.LEFT)
+
     def createImageLabel(self, parentFrame, path):
-        image = Image.open(path)
-        image.thumbnail(StyleFrame.imageSize, Image.ANTIALIAS)
-        self.photo = ImageTk.PhotoImage(image)
-        self.imageLabel = tk.Label(parentFrame, image=self.photo)
-        self.imageLabel.configure(padx=500)
+        self.photo = resizeImage(Image.open(path), StyleFrame.imageSize)
+        self.imageLabel = tk.Label(parentFrame, image=self.photo, padx=500)
         self.imageLabel.pack()
     def createTextLabel(self, parentFrame, stylename):
         self.nameLabel = tk.Label(master=parentFrame, text=stylename)
