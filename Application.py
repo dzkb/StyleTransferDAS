@@ -1,7 +1,7 @@
 import tkinter as tk
 from StyleChooser import StyleChooser
 from CameraImageProvider import CameraImageProvider
-from ImageTransformer import ImageTransformerMock
+from ImageTransformer import ImageTransformer
 from TransformationWindow import TransformationWindow
 
 class Application(tk.Frame):
@@ -12,7 +12,7 @@ class Application(tk.Frame):
         self.root.configure(bg="white", padx="10px", pady="10px")
         super().__init__(master = self.root,  bg="white")
         self.cameraImageProvider = CameraImageProvider()
-        self.imageTransformer = ImageTransformerMock()
+        self.imageTransformer = ImageTransformer()
 
         self.createTextSection("Welcome to magical style transfer from MedicalML")
         self.createStyleChooser(styles)

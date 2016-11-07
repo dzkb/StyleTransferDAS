@@ -39,7 +39,7 @@ class TransformationWindow(tk.Frame):
     def emptyImage():
         return Image.new(mode="RGB", size=TransformationWindow.imageSize)
 
-    def showTransformedImage(self, rawTransformed):
-        self.imageAfter = Image.fromarray(rawTransformed)
+    def showTransformedImage(self, transformed):
+        self.imageAfter = transformed
         self.photoAfter = resizeImage(self.imageAfter, self.imageBefore.size)
         self.imageLabel['image'] = self.photoAfter

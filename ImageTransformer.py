@@ -1,7 +1,10 @@
+from PIL import Image
 from chainer import serializers, cuda, Variable
 from net import *
 import numpy as np
 from time import sleep
+
+from neuralstyle.generate import generate
 
 RUN_ON_GPU = False
 class ImageTransformerMock():
@@ -14,23 +17,9 @@ class ImageTransformer:
         self.modelPath = ""
         
     def transform(self, image, modelPath):
-        self.loadModelFromPath(modelPath)
-
-        xp = np if not RUN_ON_GPU else cuda.cupy
-
-        image = xp.asarray(image, dtype=xp.float32).transpose(2, 0, 1)
-        image = image.reshape((1,) + image.shape)
-        image -= 120
-
-        x = Variable(image)
-        y = self.model(x)
-
-        result = cuda.to_cpu(y.data)
-        result = result.transpose(0, 2, 3, 1)
-        result = result.reshape((result.shape[1:]))
-        result += 120
-        result = np.uint8(result)
-        return result
+        generated = generate(modelPath, image)
+        print("ok")
+        return generated
 
 
     def loadModelFromPath(self, modelPath):
