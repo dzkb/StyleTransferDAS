@@ -1,4 +1,4 @@
-import tkinter as tk
+import Tkinter as tk
 from helpers import resizeImage
 from PIL import Image
 from AsyncTransformation import AsyncTransformation
@@ -8,7 +8,7 @@ class TransformationWindow(tk.Frame):
     def __init__(self, transformer, imageRaw, modelPath):
         self.root = tk.Toplevel()
         self.root.configure(bg="white", padx="10px", pady="10px")
-        super().__init__(master = self.root,  bg="white")
+        tk.Frame.__init__(self, master = self.root,  bg="white")
 
         self.imagesFrame = tk.Frame(self)
         self.addImageBefore(imageRaw)

@@ -1,32 +1,31 @@
-from PIL import Image
-from chainer import serializers, cuda, Variable
-from net import *
-import numpy as np
 from time import sleep
 
+from chainer import serializers, cuda
+from neuralstyle.net import FastStyleNet
 from neuralstyle.generate import generate
+import config
 
-RUN_ON_GPU = False
-class ImageTransformerMock():
-    def transform(self, image, modelPath):
-        sleep(3)
-        return image
+## TODO:
+#  cant parse more than one at once because
+#  instance is shared between threads
+#  causing common model and ???
+##
+
 class ImageTransformer:
     def __init__(self):
         self.model = FastStyleNet()
         self.modelPath = ""
         
     def transform(self, image, modelPath):
-        generated = generate(modelPath, image)
-        print("ok")
-        return generated
+        self.loadModelFromPath(modelPath)
+        return generate(self.model, image)
 
 
     def loadModelFromPath(self, modelPath):
-        print("start loading")
         if self.modelPath != modelPath:
+            self.modelPath = modelPath
+            print "start loading model: ", modelPath
             serializers.load_npz(modelPath, self.model)
-            if RUN_ON_GPU:
-                cuda.get_device(0).use() #assuming only one core
+            if config.RUN_ON_GPU:
+                cuda.get_device(config.GPU_UNIT).use() #assuming only one core
                 self.model.to_gpu()
-        print("loaded")

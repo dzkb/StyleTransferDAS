@@ -1,16 +1,16 @@
-import tkinter as tk
+import Tkinter as tk
 from StyleChooser import StyleChooser
 from CameraImageProvider import CameraImageProvider
 from ImageTransformer import ImageTransformer
 from TransformationWindow import TransformationWindow
-
+import config
 class Application(tk.Frame):
-    buttonColor="#B3FF50"
-    buttonText = "Make me artwork! \U000026C4"
+    buttonColor=config.MAIN_COLOR
+    buttonText = "Make me an artwork!"
     def __init__(self, styles):
         self.root = tk.Tk()
         self.root.configure(bg="white", padx="10px", pady="10px")
-        super().__init__(master = self.root,  bg="white")
+        tk.Frame.__init__(self, master=self.root, bg="white")
         self.cameraImageProvider = CameraImageProvider()
         self.imageTransformer = ImageTransformer()
 
@@ -50,7 +50,7 @@ class Application(tk.Frame):
     @staticmethod
     def displayImageTransformation(event):
         appInstance = event.widget.master
-        window = TransformationWindow(appInstance.imageTransformer,
+        TransformationWindow(appInstance.imageTransformer,
                                       appInstance.cameraImageProvider.getImageRaw(),
                                       appInstance.getSelectedModelPath())
 

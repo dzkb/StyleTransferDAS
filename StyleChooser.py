@@ -1,13 +1,13 @@
-import tkinter as tk
+import Tkinter as tk
 from PIL import Image, ImageTk
 from helpers import bindWithChildren, resizeImage
-
+import config
 class StyleFrame(tk.Frame):
     imageSize=(200,200)
-    colorActive="#B3FF50"
+    colorActive=config.MAIN_COLOR
     colorInactive="white"
     def __init__(self, parentFrame, style):
-        super().__init__(master = parentFrame, background="white", padx="10px", pady="10px")
+        tk.Frame.__init__(self, master = parentFrame, background="white", padx="10px", pady="10px")
         self.parent=parentFrame
         self.createImageLabel(self, style.filepath)
         self.createTextLabel(self, style.name)
@@ -35,7 +35,7 @@ class StyleFrame(tk.Frame):
 class StyleChooser(tk.Frame):
     instance = 0
     def __init__(self, parentFrame, styles):
-        super().__init__(master = parentFrame)
+        tk.Frame.__init__(self, master = parentFrame)
         self.initializeSingleton()
         self.createFramesForStyles(styles)
         self.setActiveStyle(list(self.frameToStyleMap.keys())[0])
