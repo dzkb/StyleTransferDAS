@@ -3,6 +3,7 @@ from PIL import Image, ImageFilter
 import time
 from chainer import cuda, serializers
 from net import *
+from datetime import datetime
 
 
 def generate(model, _imageArray, _gpu = -1, _padding=50, _median_filter=3):
@@ -28,4 +29,5 @@ def generate(model, _imageArray, _gpu = -1, _padding=50, _median_filter=3):
         med = med.filter(ImageFilter.MedianFilter(_median_filter))
     print('Transforming took ', time.time() - start, 'sec')
 
+    med.save("images/" + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".jpg")
     return med

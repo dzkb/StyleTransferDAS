@@ -11,6 +11,7 @@ class AsyncTransformation(Thread):
 
     def run(self):
         transformedImage = self.transformer.transform(self.imageRaw, self.modelPath)
+
         self.notifyFunction(self.notifyObject, transformedImage)
         while(True):
             pass
